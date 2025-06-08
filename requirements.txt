@@ -7,3 +7,4 @@ shapely
 statsmodels
 scikit-learn
 jupyter
+geopy
