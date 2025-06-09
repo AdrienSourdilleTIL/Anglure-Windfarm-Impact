@@ -51,14 +51,28 @@ model = smf.ols(
 🔻 A significant price drop near the windfarm after construction.
 Based on the regression output:
 
-- `post:treated` coefficient: –2.17 (p < 0.001) → Significant price drop post-construction near windfarm  
-→ Properties near the windfarm experienced a ~21.7% drop in sale price after the windfarm was commissioned.
+- `post:treated` coefficient: -2.33 (p < 0.001) → Significant price drop post-construction near windfarm  
+→ Properties nearest the windfarm experienced a ~90% drop in sale price after the windfarm was commissioned.
 
-- `post:treated:distance_km` coefficient: +0.82 (p < 0.001) → Impact lessens with distance  
+- `post:treated:distance_km` coefficient: +0.85 (p < 0.001) → Impact lessens with distance  
 → The negative impact decreases with distance. So the closer the property, the stronger the price drop; the farther away, the smaller (or no) effect.
 
 ## Conclusion
 There is strong evidence that the windfarm's construction negatively impacted nearby property values, with the effect fading over distance—likely due to localized nuisances like noise and visual impact.
+
+While the model estimates a sharp initial drop in property prices near the wind farm (up to −90%), this extreme effect only applies to a handful of properties — just 4 houses within 2 km and 27 within 3 km. The impact diminishes rapidly with distance, suggesting that the average property in the affected area experiences a much smaller or negligible price effect. The main insight is not the magnitude of the drop at the center, but the quick spatial decay of the impact.
+
+\[
+\text{Effect}(d) = -2.33 + 0.85 \times d
+\]
+
+| Distance (km) | Net Effect (log) | Price Change (%) |
+| ------------- | ---------------- | ---------------- |
+| 0             | −2.33            | −90%             |
+| 1             | −1.48            | −77%             |
+| 2             | −0.63            | −46%             |
+| 3             | +0.23            | ~0% negligible   |
+
 
 ---
 
