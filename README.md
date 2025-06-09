@@ -44,6 +44,7 @@ model = smf.ols(
 - **Treatment:** Properties near windfarm, post-construction  
 - **Controls:** Property size, land size, property type, year, postal code  
 - **Errors clustered by:** Commune
+```
 
 ## Results
 - `post:treated` coefficient: –2.17 (p < 0.001) → Significant price drop post-construction near windfarm  
