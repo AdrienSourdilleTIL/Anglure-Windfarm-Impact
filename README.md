@@ -62,7 +62,7 @@ There is strong evidence that the windfarm's construction negatively impacted ne
 
 While the model estimates a sharp initial drop in property prices near the wind farm (up to −90%), this extreme effect only applies to a handful of properties — just 4 houses within 2 km and 27 within 3 km. The impact diminishes rapidly with distance, suggesting that the average property in the affected area experiences a much smaller or negligible price effect. The main insight is not the magnitude of the drop at the center, but the quick spatial decay of the impact.
 
-Effect(d) = -2.33 + 0.85 × d
+Effect(d) = -2.33 + 0.85 × d 
 
 | Distance (km) | Net Effect (log) | Price Change (%) |
 | ------------- | ---------------- | ---------------- |
