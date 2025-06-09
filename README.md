@@ -1,98 +1,107 @@
-# 🌬️ Impact of the Saint-Vincent-des-Landes Wind Farm on House Prices
+# 🌬️ Anglure Windfarm Impact on Property Prices
 
-This project investigates how the installation of the wind farm in Saint-Vincent-des-Landes (Loire-Atlantique, France) has affected surrounding residential property prices.
+## Overview
+This project investigates the effect of the Anglure windfarm on nearby residential property prices in France. Using publicly available property transaction data (valeurs foncières), we apply a difference-in-differences (DiD) approach with spatial variation to isolate the impact of the windfarm's construction on the nearby housing market.
 
 ## 🎯 Objective
+Estimate the **causal impact** of the wind farm on house prices in nearby communes using spatial and temporal property transaction data.
 
-To estimate the **causal impact** of the wind farm on house prices in nearby communes using spatial and temporal property transaction data.
-
----
+**Key question:**  
+Does the construction of a windfarm negatively affect nearby property prices?
 
 ## 📍 Context
-
-- **Wind farm location**: Saint-Vincent-des-Landes, Loire-Atlantique (44), France  
-- **Coordinates**: Approx. 47.6670°N, -1.3170°E  
-- **Commissioning date**: *(insert exact commissioning date once confirmed)*  
-- **Analysis window**: 2–3 years before and after commissioning
-
----
-
-## 📂 Project Structure
-
-
----
+- **Wind farm location:** Anglure (51), France  
+- **Coordinates:** 48.6424°N, 3.7871°E  
+- **Commissioning date:** 2018-10-01  
+- **Analysis window:** 2–3 years before and after construction
 
 ## 🗃️ Data Sources
-
 - **Housing Transactions**  
   [DVF - Demande de Valeurs Foncières](https://www.data.gouv.fr/fr/datasets/demandes-de-valeurs-foncieres/)  
-  Property sales data including price, surface area, location, and date of transaction.
+  Includes price, surface area, location, and date of transaction.
 
 - **Commune Boundaries (Shapefiles)**  
   [INSEE Admin Express](https://www.insee.fr/fr/information/2114819)  
   Official shapefiles to identify and geolocate communes.
 
-- **Geographic Coordinates of Wind Farm**  
-  Manually defined or sourced from public maps/satellite data. Approximate location:  
-  `Latitude 47.6670° N, Longitude -1.3170° E`
+- **Wind Farm Coordinates**  
+  Manually defined or sourced from public maps/satellite data:  
+  `Latitude 48.6424°N, Longitude 3.7871°E`
 
 ---
 
-## ⚙️ Methodology Overview
+## Methodology
+Constructed a panel dataset of property sales (2014–2024), geolocated transactions, and calculated distances from the windfarm. Compared properties near (treated) vs. far (control), before and after construction.
 
-1. **Filter** DVF data for relevant years (e.g. 2018–2022).
-2. **Select communes** within a 30 km radius of the wind farm as the treatment group.
-3. Use surrounding communes (30–60 km away) as a control group.
-4. **Aggregate** price per square meter by commune and year.
-5. Estimate causal effects using a **difference-in-differences** (DiD) model.
+Regression model:
+
+```python
+model = smf.ols(
+    "log_valeur_fonciere ~ post*treated + post*treated*distance_km + surface_reelle_bati + surface_terrain + C(type_local) + C(year) + C(code_postal)",
+    data=df
+).fit(cov_type='cluster', cov_kwds={'groups': df['code_commune']})
+- **Dependent variable:** Log of sale price  
+- **Treatment:** Properties near windfarm, post-construction  
+- **Controls:** Property size, land size, property type, year, postal code  
+- **Errors clustered by:** Commune
+
+## Results
+- `post:treated` coefficient: –2.17 (p < 0.001) → Significant price drop post-construction near windfarm  
+- `post:treated:distance_km` coefficient: +0.82 (p < 0.001) → Impact lessens with distance  
+- Effect is strongly localized, proximity drives price decline
+
+## Conclusion
+Strong evidence that the windfarm's construction negatively impacted nearby property values, with the effect fading over distance—likely due to localized nuisances like noise and visual impact.
+
+---
+
+## Next Steps
+- Expand analysis to other windfarm sites  
+- Explore heterogeneous effects by property type or buyer profile  
+- Investigate price recovery over time post-construction
 
 ---
 
 ## 🧪 Causal Strategy
 
-The core model:
+Model specification:
 
-price_per_m2_it = α + β * treated_post_it + γ * treated_i + δ * post_t + X_it + ε_it
+\[
+price\_per\_m2_{it} = \alpha + \beta \times treated\_post_{it} + \gamma \times treated_i + \delta \times post_t + X_{it} + \varepsilon_{it}
+\]
 
-
-Where:
-- `treated_post_it` = 1 if commune is within 30 km and after wind farm launch
-- `treated_i` = 1 for treatment communes
-- `post_t` = 1 for post-treatment period
-- `X_it` = optional controls (e.g. income, population)
-- `β` captures the effect of the wind farm on property prices
+Where:  
+- `treated_post_it` = 1 if commune within 30 km after windfarm launch  
+- `treated_i` = 1 for treatment communes  
+- `post_t` = 1 for post-treatment period  
+- `X_it` = controls (income, population, etc.)  
+- β captures windfarm effect on property prices
 
 ---
 
 ## ✅ Project Status
-
-- ✅ DVF data collected (2018–2022)
-- 🔲 Filter communes by distance from wind farm
-- 🔲 Clean and join datasets
-- 🔲 Run DiD model
-- 🔲 Visualize results
+- ✅ DVF data collected (2018–2022)  
+- ✅ Filter communes by distance from wind farm  
+- ✅ Clean and join datasets  
+- ✅ Run DiD model  
+- ✅ Visualize results
 
 ---
 
 ## 👤 Author
-
-Adrien — Data engineer interested in the intersection of energy infrastructure, economics, and spatial analysis.
+Adrien Sourdille — Data engineer interested in energy infrastructure, economics, and spatial analysis.
 
 ---
 
 ## 📜 License
-
 MIT License. See `LICENSE` file for details.
 
 ---
 
 ## 🛠️ Environment (optional)
+- Python 3.10+  
+- Libraries: `pandas`, `geopandas`, `shapely`, `scikit-learn`, `statsmodels`, `matplotlib`, `seaborn`
 
-- Python 3.10+
-- `pandas`, `geopandas`, `shapely`, `scikit-learn`, `statsmodels`, `matplotlib`, `seaborn`
-
-To install dependencies:
+Install dependencies with:  
 ```bash
 pip install -r requirements.txt
-
-
