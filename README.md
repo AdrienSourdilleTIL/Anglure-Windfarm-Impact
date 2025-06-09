@@ -30,7 +30,7 @@ Does the construction of a windfarm negatively affect nearby property prices?
 
 ---
 
-## Methodology
+## 🧪 Methodology
 Constructed a panel dataset of property sales (2014–2024), geolocated transactions, and calculated distances from the windfarm. Compared properties near (treated) vs. far (control), before and after construction.
 
 Regression model:
@@ -54,39 +54,6 @@ model = smf.ols(
 
 ## Conclusion
 Strong evidence that the windfarm's construction negatively impacted nearby property values, with the effect fading over distance—likely due to localized nuisances like noise and visual impact.
-
----
-
-## Next Steps
-- Expand analysis to other windfarm sites  
-- Explore heterogeneous effects by property type or buyer profile  
-- Investigate price recovery over time post-construction
-
----
-
-## 🧪 Causal Strategy
-
-Model specification:
-
-\[
-price\_per\_m2_{it} = \alpha + \beta \times treated\_post_{it} + \gamma \times treated_i + \delta \times post_t + X_{it} + \varepsilon_{it}
-\]
-
-Where:  
-- `treated_post_it` = 1 if commune within 30 km after windfarm launch  
-- `treated_i` = 1 for treatment communes  
-- `post_t` = 1 for post-treatment period  
-- `X_it` = controls (income, population, etc.)  
-- β captures windfarm effect on property prices
-
----
-
-## ✅ Project Status
-- ✅ DVF data collected (2018–2022)  
-- ✅ Filter communes by distance from wind farm  
-- ✅ Clean and join datasets  
-- ✅ Run DiD model  
-- ✅ Visualize results
 
 ---
 
