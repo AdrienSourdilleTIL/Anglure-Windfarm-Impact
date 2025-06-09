@@ -40,11 +40,12 @@ model = smf.ols(
     "log_valeur_fonciere ~ post*treated + post*treated*distance_km + surface_reelle_bati + surface_terrain + C(type_local) + C(year) + C(code_postal)",
     data=df
 ).fit(cov_type='cluster', cov_kwds={'groups': df['code_commune']})
+```
 - **Dependent variable:** Log of sale price  
 - **Treatment:** Properties near windfarm, post-construction  
 - **Controls:** Property size, land size, property type, year, postal code  
 - **Errors clustered by:** Commune
-```
+
 
 ## Results
 - `post:treated` coefficient: –2.17 (p < 0.001) → Significant price drop post-construction near windfarm  
