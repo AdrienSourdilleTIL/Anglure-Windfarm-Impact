@@ -48,12 +48,17 @@ model = smf.ols(
 
 
 ## Results
+🔻 A significant price drop near the windfarm after construction.
+Based on the regression output:
+
 - `post:treated` coefficient: –2.17 (p < 0.001) → Significant price drop post-construction near windfarm  
+→ Interpreted as: Properties near the windfarm experienced a ~21.7% drop in sale price after the windfarm was commissioned (since the dependent variable is log-transformed).
+
 - `post:treated:distance_km` coefficient: +0.82 (p < 0.001) → Impact lessens with distance  
-- Effect is strongly localized, proximity drives price decline
+→ This means: The negative impact decreases with distance. So the closer the property, the stronger the price drop; the farther away, the smaller (or no) effect.
 
 ## Conclusion
-Strong evidence that the windfarm's construction negatively impacted nearby property values, with the effect fading over distance—likely due to localized nuisances like noise and visual impact.
+There is strong evidence that the windfarm's construction negatively impacted nearby property values, with the effect fading over distance—likely due to localized nuisances like noise and visual impact.
 
 ---
 
